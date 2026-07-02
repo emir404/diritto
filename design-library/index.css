@@ -1,0 +1,8 @@
+/* Single entry point — import this once from the app's globals.css:
+ *   @import "../design-library/index.css";
+ */
+@import "./tokens/tokens.css";
+@import "./treatments/sketch.css";
+@import "./treatments/duotone.css";
+@import "./treatments/grain.css";
+@import "./treatments/hexagon.css";
