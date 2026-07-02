@@ -34,6 +34,8 @@ export type Lawyer = {
   slug: string;
   name: string;
   role: string;
+  /** short, consistent one-line specialty for the team grid (fuller `role` shown on the detail page) */
+  roleShort?: string;
   cities: string;
   image: string;
   founder?: boolean;
@@ -47,6 +49,7 @@ export const lawyers: Lawyer[] = [
     slug: "giovanni-prearo",
     name: "Giovanni Prearo",
     role: "Avvocato civilista",
+    roleShort: "Diritto civile e d'impresa",
     cities: "Milano",
     image: "/images/Avv-Prearo.webp",
     areas: ["Diritto bancario", "Diritto societario", "Crisi d'impresa", "Diritto dei contratti"],
@@ -60,7 +63,8 @@ export const lawyers: Lawyer[] = [
     slug: "valentina-stamerra",
     name: "Valentina Stamerra",
     role: "Proprietà intellettuale e industriale",
-    cities: "Milano · Lecce",
+    roleShort: "Proprietà intellettuale",
+    cities: "Lecce · Milano",
     image: "/images/Avv-Stamerra.webp",
     founder: true,
     areas: ["Marchi, Brevetti e Diritto d'autore", "Proprietà industriale", "Diritto dei contratti", "Diritto societario"],
@@ -78,7 +82,8 @@ export const lawyers: Lawyer[] = [
     slug: "valeria-esposito",
     name: "Valeria Esposito",
     role: "Diritto di famiglia e successioni",
-    cities: "Network diritto&consulenza",
+    roleShort: "Famiglia e successioni",
+    cities: "Milano",
     image: "/images/Avv-Esposito.webp",
     areas: ["Diritto di famiglia e Successioni"],
     bio: [
@@ -89,7 +94,8 @@ export const lawyers: Lawyer[] = [
     slug: "beatrice-mannarini",
     name: "Beatrice Mannarini",
     role: "Diritto di famiglia",
-    cities: "Network diritto&consulenza",
+    roleShort: "Diritto di famiglia",
+    cities: "Lecce",
     image: "/images/AvvMannarini_new.webp",
     areas: ["Diritto di famiglia e Successioni"],
     bio: [
@@ -100,7 +106,8 @@ export const lawyers: Lawyer[] = [
     slug: "alberto-pisanello",
     name: "Alberto Pisanello",
     role: "Famiglia · Responsabilità medica · Proprietà intellettuale",
-    cities: "Network diritto&consulenza",
+    roleShort: "Famiglia e responsabilità medica",
+    cities: "Bologna",
     image: "/images/Avv-Pisanello.webp",
     areas: ["Diritto di famiglia e Successioni", "Malasanità e risarcimento danni", "Marchi, Brevetti e Diritto d'autore"],
     bio: [
@@ -141,6 +148,16 @@ export const areas: Area[] = [
     title: "Reati contro la persona e la famiglia",
     segment: "persone",
     color: "var(--color-brand-aubergine)",
+    summary:
+      "Consulenza e assistenza in materia di diritto penale, con particolare riferimento ai reati commessi in ambito familiare — dalla querela alla costituzione di parte civile e alla difesa nel procedimento penale.",
+    services: [
+      "Atti persecutori (stalking), molestie e minacce",
+      "Maltrattamenti in famiglia",
+      "Violazione degli obblighi di mantenimento e di assistenza familiare",
+      "Assistenza alla persona offesa: denuncia/querela e costituzione di parte civile",
+      "Difesa della persona indagata, dalle indagini preliminari al processo",
+    ],
+    lawyers: ["alberto-pisanello", "beatrice-mannarini"],
   },
   {
     slug: "malasanita-e-risarcimento-danni",
@@ -191,44 +208,97 @@ export const areas: Area[] = [
     title: "Crisi d'impresa e sovraindebitamento",
     segment: "imprese",
     color: "var(--color-brand-blue)",
+    summary:
+      "Analisi della situazione debitoria e individuazione dello strumento idoneo a superare la crisi d'impresa o il sovraindebitamento, con assistenza sino all'omologa e nell'esecuzione.",
+    services: [
+      "Analisi della situazione debitoria e scelta dello strumento idoneo",
+      "Concordato preventivo, accordo o piano di risanamento attestato",
+      "Concordato minore e ristrutturazione dei debiti del consumatore",
+      "Assistenza sino all'omologa e nell'esecuzione degli accordi",
+    ],
+    lawyers: ["giovanni-prearo"],
   },
   {
     slug: "tutela-della-proprieta-industriale-e-intellettuale",
     title: "Tutela della Proprietà industriale e intellettuale",
     segment: "imprese",
     color: "var(--color-brand-blue-deep)",
+    summary:
+      "Tutela di Marchi, Brevetti, Disegni industriali e Diritto d'autore per le imprese che investono in innovazione — in Italia, in Europa e all'estero.",
+    services: [
+      "Deposito di marchi, brevetti e opere a livello nazionale, europeo e internazionale",
+      "Ricerche di anteriorità",
+      "Contratti di licenza, cessione, edizione e produzione",
+      "Opposizione, nullità e decadenza presso UIBM, EPO, EUIPO e WIPO",
+      "Cause di contraffazione e plagio; domiciliazioni a Milano, Bari e Bologna",
+    ],
+    lawyers: ["valentina-stamerra", "alberto-pisanello"],
   },
   {
     slug: "diritto-societario",
     title: "Diritto societario",
     segment: "imprese",
     color: "var(--color-brand-taupe)",
+    summary:
+      "Consulenza nella compravendita di partecipazioni, aziende e rami d'azienda, nella redazione dei patti parasociali e nelle controversie societarie.",
+    services: [
+      "Compravendita di partecipazioni sociali, aziende o rami d'azienda",
+      "Lettere d'intenti, term sheet e contratti di acquisizione",
+      "Redazione di patti parasociali",
+      "Controversie tra soci, impugnazione di delibere e azioni di responsabilità (art. 2409 c.c.)",
+    ],
+    lawyers: ["giovanni-prearo", "valentina-stamerra"],
   },
   {
     slug: "gestione-e-tutela-del-credito",
     title: "Gestione e tutela del credito",
     segment: "imprese",
     color: "var(--color-brand-sage-deep)",
+    summary:
+      "Recupero del credito per le imprese in fase stragiudiziale, giudiziale ed esecutiva, con puntuale rendicontazione, su tutto il territorio nazionale.",
+    services: [
+      "Recupero stragiudiziale: diffide, solleciti e piani di rientro",
+      "Recupero giudiziale e gestione del contenzioso",
+      "Iniziative esecutive e ricerca dei beni pignorabili (art. 492 bis c.p.c.)",
+      "Gestione dell'eventuale fase concorsuale e rendicontazione",
+    ],
+    lawyers: ["giovanni-prearo"],
   },
   {
     slug: "diritto-dei-contratti",
     title: "Diritto dei contratti",
     segment: "imprese",
     color: "var(--color-brand-aubergine)",
+    summary:
+      "Redazione, negoziazione e interpretazione dei contratti d'impresa, con assistenza nelle controversie su inadempimento, risoluzione, annullamento o rescissione.",
+    services: [
+      "Redazione e negoziazione di contratti d'impresa",
+      "Accordi modificativi di patti già conclusi",
+      "Pareri su esecuzione, interpretazione e risoluzione",
+      "Controversie su inadempimento, annullamento o rescissione",
+    ],
+    lawyers: ["giovanni-prearo", "valentina-stamerra"],
   },
   {
     slug: "locazioni-e-diritto-immobiliare",
     title: "Locazioni e diritto immobiliare",
     segment: "imprese",
     color: "var(--color-brand-terracotta)",
+    summary:
+      "Consulenza e contenzioso in materia di locazioni e diritto immobiliare, inclusi i contratti di appalto di facility e property management, gli sfratti e le esecuzioni per rilascio.",
+    services: [
+      "Contratti di locazione e diritto immobiliare",
+      "Contratti di appalto di servizi di facility e property management",
+      "Contenzioso ordinario, sfratti ed esecuzioni per rilascio",
+      "Recupero dei crediti connesso",
+    ],
+    lawyers: ["giovanni-prearo"],
   },
 ];
 
 export type Office = {
   city: string;
   image: string;
-  landmark: string;
-  era: string;
   addresses: string[];
   phones: string[];
 };
@@ -237,32 +307,146 @@ export const offices: Office[] = [
   {
     city: "Bologna",
     image: "/images/Bologna.webp",
-    landmark: "Le Due Torri",
-    era: "la città medievale",
     addresses: ["Via San Felice, 123"],
     phones: ["+39 051 0037674"],
   },
   {
     city: "Lecce",
     image: "/images/Lecce.webp",
-    landmark: "Il barocco leccese",
-    era: "il Sud",
     addresses: ["Viale Giovanni Paolo II, 11", "Via Giovanni Stano, 23"],
     phones: ["+39 0832 1827747", "+39 347 5076342"],
   },
   {
     city: "Milano",
     image: "/images/TreTorri-Prearo.jpg",
-    landmark: "CityLife, le Tre Torri",
-    era: "la città contemporanea",
     addresses: ["Via Domenichino, 11"],
     phones: ["+39 02 23177040"],
   },
+];
+
+/** Primary line per office city (first phone listed). */
+export const officePhone: Record<string, string> = Object.fromEntries(
+  offices.map((o) => [o.city, o.phones[0]]),
+);
+
+/**
+ * A professional's callable number: their own direct line if present, otherwise
+ * the primary line of their assigned office (per the network's office assignments).
+ */
+export function lawyerPhone(l: Lawyer): string | undefined {
+  if (l.contact?.phone) return l.contact.phone;
+  const city = l.cities.split(/[·,]/)[0].trim();
+  return officePhone[city];
+}
+
+export type Article = {
+  title: string;
+  date: string; // display date, verbatim from their news index
+  author?: string;
+  href: string; // the article on the live site, or the news hub as a fallback
+};
+
+const NEWS_HUB = "https://dirittoeconsulenza.it/news";
+
+/**
+ * News — real, bylined legal-insight articles from the network (2024–2026),
+ * verbatim from clients/dirittoeconsulenza.it/pages/news.md. Display dates are
+ * theirs; `href` links to the live article where the URL is known, else the hub.
+ * (Article bodies are not rebuilt here — links open the existing site.)
+ */
+export const news: Article[] = [
+  {
+    title: "Google Ads e uso di marchi altrui come parole chiave",
+    date: "13.4.2026",
+    author: "Valentina Stamerra",
+    href: "https://dirittoeconsulenza.it/2026/2/18/google-ads-e-uso-di-marchi-altrui-come-parole-chiave-di-avv-valentina-stamerra",
+  },
+  {
+    title: "Il marchio della Licenziataria dopo la scadenza del contratto",
+    date: "18.2.2026",
+    href: NEWS_HUB,
+  },
+  {
+    title: "Spese condominiali: come vanno suddivise tra nudo proprietario e usufruttuario",
+    date: "12.2.2026",
+    href: "https://dirittoeconsulenza.it/2026/2/18/spese-condominiali-come-vanno-suddivise-tra-nudo-proprietario-e-usufruttuario",
+  },
+  {
+    title:
+      "Approvata la riforma della disciplina dei trasferimenti degli immobili oggetto di donazione",
+    date: "18.12.2025",
+    href: NEWS_HUB,
+  },
+  {
+    title:
+      "Successioni: al via l'iter per la modifica della disciplina relativa alla restituzione dei beni oggetto di donazione",
+    date: "11.11.2025",
+    href: NEWS_HUB,
+  },
+  {
+    title: "Anche i single possono adottare all'estero",
+    date: "31.3.2025",
+    href: "https://dirittoeconsulenza.it/2025/11/11/anche-i-single-possono-adottare-allestero1",
+  },
+  {
+    title: "Le rivendicazioni ben scritte blindano un brevetto?",
+    date: "26.2.2025",
+    href: NEWS_HUB,
+  },
+  {
+    title: "Contratto di locazione privo di forma scritta e non registrato",
+    date: "22.1.2025",
+    href: NEWS_HUB,
+  },
+  { title: "In cosa consiste la riforma europea del design?", date: "20.11.2024", href: NEWS_HUB },
+  {
+    title: "Voucher I3 Brevetti finanziati 100% a fondo perduto",
+    date: "2.10.2024",
+    href: NEWS_HUB,
+  },
+  {
+    title: "Revoca dell'assegnazione della casa familiare: casistica",
+    date: "19.9.2024",
+    author: "Beatrice Mannarini",
+    href: NEWS_HUB,
+  },
+  { title: "La revoca dell'assegnazione della casa familiare", date: "1.6.2024", href: NEWS_HUB },
+  { title: "Illiceità del marchio: il caso Coca Pola", date: "23.4.2024", href: NEWS_HUB },
+  {
+    title: "Separazione e divorzio insieme: cosa sapere",
+    date: "22.4.2024",
+    author: "Beatrice Mannarini",
+    href: NEWS_HUB,
+  },
+  {
+    title: "Registrazione marchio: una guida completa",
+    date: "13.3.2024",
+    href: "https://dirittoeconsulenza.it/2024/3/29/registrazione-marchio-una-guida-completa",
+  },
+  {
+    title: "Assegno divorzile: quando è dovuto?",
+    date: "4.3.2024",
+    href: "https://dirittoeconsulenza.it/2024/3/13/assegno-divorzile-quando-e-dovuto",
+  },
+  {
+    title: "Intelligenza Artificiale (AI) e proprietà intellettuale",
+    date: "26.2.2024",
+    author: "Valentina Stamerra",
+    href: NEWS_HUB,
+  },
+  {
+    title: "L'affido condiviso e il diritto del minore alla bi-genitorialità",
+    date: "12.2.2024",
+    author: "Beatrice Mannarini",
+    href: NEWS_HUB,
+  },
+  { title: "Finanziamenti e manipolazione dell'euribor", date: "29.1.2024", href: NEWS_HUB },
 ];
 
 export const nav = [
   { href: "/", label: "Home" },
   { href: "/professionisti", label: "Professionisti" },
   { href: "/aree-attivita", label: "Aree di attività" },
+  { href: "/news", label: "News" },
   { href: "/contatti", label: "Contatti" },
 ];

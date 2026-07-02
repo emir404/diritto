@@ -13,22 +13,22 @@ export function ContactCta() {
       </span>
       <div className="relative mx-auto max-w-4xl px-6 py-24 text-center sm:py-32">
         <p className="text-kicker text-brand-sage">Come possiamo aiutarti?</p>
-        <h2 className="text-display mt-4 text-[var(--dl-paper)]">Il primo passo è una domanda.</h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[var(--dl-paper-dim)]">
-          Contattaci ai recapiti delle nostre sedi o compila il modulo: ti ricontattiamo noi, senza
-          impegno.
+        <h2 className="text-display mt-4 text-[var(--dl-paper)]">Contatta il network.</h2>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--dl-paper-dim)] sm:text-lg">
+          Contattaci ai recapiti delle nostre sedi o compila il modulo per essere ricontattato: la
+          prima valutazione è senza impegno.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           <Link
             href="/contatti"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-brand-terracotta)] px-7 py-3.5 text-sm font-medium text-[var(--dl-paper)] transition-[transform,opacity] duration-150 ease-out hover:opacity-90 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dl-paper)]"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-brand-terracotta)] px-7 py-3.5 text-sm font-medium text-[var(--dl-paper)] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-[color-mix(in_oklab,var(--color-brand-terracotta)_88%,black)] hover:shadow-[0_14px_30px_-12px_rgba(0,0,0,0.55)] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--dl-paper)]"
           >
             Contatta i professionisti
           </Link>
           <span className="text-sm text-[var(--dl-paper-dim)]">oppure</span>
           <a
             href="tel:+390223177040"
-            className="font-display text-xl text-[var(--dl-paper)] underline-offset-4 hover:underline"
+            className="font-display text-xl text-[var(--dl-paper)] underline decoration-[color-mix(in_oklab,var(--dl-paper)_45%,transparent)] decoration-1 underline-offset-4 transition-colors hover:decoration-[var(--dl-paper)]"
           >
             <span className="tabular-nums">+39 02 23177040</span>
           </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -9,6 +9,11 @@ import { btnPrimary } from "@/lib/ui";
 
 const persone = areas.filter((a) => a.segment === "persone");
 const imprese = areas.filter((a) => a.segment === "imprese");
+
+const linkCls = (active: boolean) =>
+  `rounded-full px-3 py-2 text-sm font-medium transition-colors ${
+    active ? "text-[var(--dl-accent)]" : "text-[var(--dl-ink-soft)] hover:text-[var(--dl-ink)]"
+  }`;
 
 function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
@@ -32,12 +37,22 @@ export function Header() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const linkCls = (active: boolean) =>
-    `rounded-full px-3 py-2 text-sm font-medium transition-colors ${
-      active
-        ? "text-[var(--dl-accent)]"
-        : "text-[var(--dl-ink-soft)] hover:text-[var(--dl-ink)]"
-    }`;
+  // Close the menu on navigation.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll + close on Escape while the full-screen menu is open.
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-[color-mix(in_oklab,var(--dl-paper)_88%,transparent)] backdrop-blur-md">
@@ -100,6 +115,9 @@ export function Header() {
             </div>
           </div>
 
+          <Link href="/news" className={linkCls(isActive("/news"))}>
+            News
+          </Link>
           <Link href="/contatti" className={linkCls(isActive("/contatti"))}>
             Contatti
           </Link>
@@ -124,43 +142,84 @@ export function Header() {
         </button>
       </div>
 
+      {/* full-screen mobile menu */}
       {open && (
-        <div className="border-t border-border bg-[var(--dl-paper)] lg:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4" aria-label="Navigazione mobile">
-            {nav.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-base font-medium ${
-                  isActive(n.href)
-                    ? "bg-[var(--dl-paper-soft)] text-[var(--dl-accent)]"
-                    : "text-[var(--dl-ink)]"
-                }`}
-              >
-                {n.label}
-              </Link>
-            ))}
-            <details className="group rounded-lg px-3 py-1">
-              <summary className="flex cursor-pointer list-none items-center justify-between py-1.5 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--dl-ink-soft)]">
-                Tutte le aree
-                <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden />
-              </summary>
-              <ul className="mt-1 mb-2 space-y-1.5 pl-1">
-                {areas.map((a) => (
-                  <li key={a.slug}>
-                    <Link
-                      href={`/aree-attivita#${a.slug}`}
-                      onClick={() => setOpen(false)}
-                      className="block py-1 text-sm text-[var(--dl-ink-soft)]"
-                    >
-                      {a.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
-            <Link href="/contatti" onClick={() => setOpen(false)} className={`mt-2 ${btnPrimary}`}>
+        <div className="fixed inset-0 z-[60] flex flex-col bg-[var(--dl-paper)] lg:hidden">
+          <div className="flex items-center justify-between gap-4 border-b border-border px-6 py-3.5">
+            <Wordmark onClick={() => setOpen(false)} />
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Chiudi menu"
+              className="inline-flex size-10 items-center justify-center rounded-full text-[var(--dl-ink)] transition-colors hover:bg-[var(--dl-paper-soft)] active:scale-95"
+            >
+              <X className="size-5" aria-hidden="true" />
+            </button>
+          </div>
+
+          <nav
+            className="flex-1 overflow-y-auto px-6 py-6"
+            aria-label="Navigazione mobile"
+          >
+            <div className="flex flex-col">
+              {nav.map((n) => (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  onClick={() => setOpen(false)}
+                  className={`border-b border-border py-3.5 font-[family-name:var(--dl-font-display)] text-2xl ${
+                    isActive(n.href) ? "text-[var(--dl-accent)]" : "text-[var(--dl-ink)]"
+                  }`}
+                >
+                  {n.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-terracotta)]">
+                  Per le persone
+                </p>
+                <ul className="space-y-2.5">
+                  {persone.map((a) => (
+                    <li key={a.slug}>
+                      <Link
+                        href={`/aree-attivita#${a.slug}`}
+                        onClick={() => setOpen(false)}
+                        className="block text-sm leading-snug text-[var(--dl-ink-soft)]"
+                      >
+                        {a.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-blue)]">
+                  Per le imprese
+                </p>
+                <ul className="space-y-2.5">
+                  {imprese.map((a) => (
+                    <li key={a.slug}>
+                      <Link
+                        href={`/aree-attivita#${a.slug}`}
+                        onClick={() => setOpen(false)}
+                        className="block text-sm leading-snug text-[var(--dl-ink-soft)]"
+                      >
+                        {a.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <Link
+              href="/contatti"
+              onClick={() => setOpen(false)}
+              className={`mt-8 w-full ${btnPrimary}`}
+            >
               Contattaci
             </Link>
           </nav>

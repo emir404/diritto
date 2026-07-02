@@ -48,9 +48,9 @@ export default function RootLayout({
     <html
       lang="it"
       data-scroll-behavior="smooth"
-      className={`${fraunces.variable} ${poppins.variable} antialiased`}
+      className={`${fraunces.variable} ${poppins.variable} overflow-x-clip antialiased`}
     >
-      <body className="flex min-h-screen flex-col overflow-x-clip bg-[var(--dl-paper)] text-[var(--dl-ink)]">
+      <body className="flex min-h-[100svh] flex-col overflow-x-clip bg-[var(--dl-paper)] text-[var(--dl-ink)]">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-[var(--dl-accent)] focus:px-4 focus:py-2 focus:text-[var(--dl-paper)]"

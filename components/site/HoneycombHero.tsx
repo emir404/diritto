@@ -1,10 +1,11 @@
 import { HexCell } from "@library/components/HexCell";
+import { portraitDuo } from "@/lib/ui";
 
 /**
  * HoneycombHero — THE signature (the one bold moment; every other hexagon on the
- * site was retired for this). A sculptural cluster of cells tracing Italy NW→SE,
- * tuned to pop on the hero's deep-ink panel: recolored cells, an oversized "&"
- * focal cell, three large duotone city photos, staggered load, bleeds off-edge.
+ * site was retired for this). A sculptural cluster tracing Italy NW→SE: the three
+ * cities, the five professionals as duotone portraits (people brought forward, per
+ * FEEL.md), an oversized "&" focal cell, and a few brand-color cells for warmth.
  */
 
 type Cell = {
@@ -13,6 +14,8 @@ type Cell = {
   color?: string;
   img?: string;
   alt?: string;
+  /** a professional portrait → lighter duotone + face-biased crop */
+  face?: boolean;
   amp?: boolean;
 };
 
@@ -23,18 +26,18 @@ const ROW = 0.75 * H;
 const OFF = W / 2;
 
 const CELLS: Cell[] = [
-  { c: 0, r: 0, img: "/images/TreTorri-Prearo.jpg", alt: "Milano — CityLife, le Tre Torri" },
+  { c: 0, r: 0, img: "/images/TreTorri-Prearo.jpg", alt: "Milano" },
   { c: 1, r: 0, color: "var(--color-brand-terracotta)" },
-  { c: 0, r: 1, color: "var(--color-brand-sage)" },
-  { c: 1, r: 1, img: "/images/Bologna.webp", alt: "Bologna — le Due Torri" },
-  { c: 2, r: 1, color: "var(--color-brand-blush)" },
+  { c: 0, r: 1, img: "/images/Avv-Prearo.webp", alt: "Avv. Giovanni Prearo", face: true },
+  { c: 1, r: 1, img: "/images/Bologna.webp", alt: "Bologna" },
+  { c: 2, r: 1, img: "/images/Avv-Stamerra.webp", alt: "Avv. Valentina Stamerra", face: true },
   { c: 1, r: 2, color: "var(--color-brand-blue)" },
-  { c: 2, r: 2, color: "var(--color-brand-taupe)" },
+  { c: 2, r: 2, img: "/images/Avv-Esposito.webp", alt: "Avv. Valeria Esposito", face: true },
   { c: 1, r: 3, amp: true, color: "var(--color-brand-terracotta)" },
   { c: 2, r: 3, color: "var(--color-brand-sage)" },
-  { c: 3, r: 3, color: "var(--color-brand-blush)" },
-  { c: 2, r: 4, img: "/images/Lecce.webp", alt: "Lecce — il barocco leccese" },
-  { c: 3, r: 4, color: "var(--color-brand-blue)" },
+  { c: 3, r: 3, img: "/images/AvvMannarini_new.webp", alt: "Avv. Beatrice Mannarini", face: true },
+  { c: 2, r: 4, img: "/images/Lecce.webp", alt: "Lecce" },
+  { c: 3, r: 4, img: "/images/Avv-Pisanello.webp", alt: "Avv. Alberto Pisanello", face: true },
   { c: 2, r: 5, color: "var(--color-brand-taupe)" },
   { c: 3, r: 5, color: "var(--color-brand-sage)" },
 ];
@@ -48,7 +51,7 @@ export function HoneycombHero() {
         const gap = W * 0.04; // hairline of paper between cells
         return (
           <div
-            key={i}
+            key={`${cell.c}-${cell.r}`}
             className={`dl-hex-pop absolute ${cell.amp ? "z-10" : ""}`}
             style={{
               left: `${left + gap / 2}cqw`,
@@ -62,7 +65,14 @@ export function HoneycombHero() {
             }}
           >
             {cell.img ? (
-              <HexCell src={cell.img} alt={cell.alt ?? ""} priority />
+              <HexCell
+                src={cell.img}
+                alt={cell.alt ?? ""}
+                priority
+                shadow={cell.face ? portraitDuo.shadow : undefined}
+                highlight={cell.face ? portraitDuo.highlight : undefined}
+                className={cell.face ? "[&_img]:object-[center_15%]" : ""}
+              />
             ) : cell.amp ? (
               <HexCell color={cell.color}>
                 <span
